@@ -11,19 +11,6 @@ from rich.layout import Layout
 
 # opening a new terminal window:
 if "--child" not in sys.argv:
-    # command_bash = "start cmd /k python C:\\Users\\Aditi\\Documents\\System-Usage-Monitor\\stats-script.py --child"
-    # command_powershell = "start powershell -NoExit -Command python stats-script.py --child"
-    # script = os.path.abspath(__file__)
-
-    # # subprocess.Popen(
-    # #     ["cmd", "/k", f'python "{script}" --child'],
-    # #     creationflags=subprocess.CREATE_NEW_CONSOLE,
-    # # )
-    # subprocess.Popen(
-    #     command_powershell,
-    #     creationflags=subprocess.CREATE_NEW_CONSOLE,
-    # )
-
     subprocess.Popen(
         [sys.executable, "stats-script.py", "--child"],
         creationflags=subprocess.CREATE_NEW_CONSOLE,
@@ -94,20 +81,11 @@ def layout():
 
     layout = Layout()
 
-    layout.split_column(
-        Layout(name="top", ratio=1),
-        Layout(name="bottom", ratio=1)
-    )
+    layout.split_column(Layout(name="top", ratio=1), Layout(name="bottom", ratio=1))
 
-    layout["top"].split_row(
-        Layout(name="cpu"),
-        Layout(name="memory")
-    )
+    layout["top"].split_row(Layout(name="cpu"), Layout(name="memory"))
 
-    layout["bottom"].split_row(
-        Layout(name="disk"),
-        Layout(name="procs")
-    )
+    layout["bottom"].split_row(Layout(name="disk"), Layout(name="procs"))
 
     layout["cpu"].update(get_cpu_usage())
     layout["memory"].update(get_memory_usage())
@@ -115,30 +93,6 @@ def layout():
     layout["procs"].update(get_top_processes())
 
     return layout
-
-    # layout = Layout()
-    # layout.split_column(
-    #     get_cpu_usage(), get_memory_usage(), get_disk_usage(), get_top_processes()
-    # )
-    # return layout
-
-
-# live update:
-# def live_update():
-#     with Live(layout(), refresh_per_second=1, screen=True):
-#         while True:
-#             time.sleep(1)
-#             Live.update(layout())
-
-
-# if __name__ == "__main__":
-#     # cpu_usage = get_cpu_usage()
-#     # print(f"Current CPU Usage: {cpu_usage}%")
-#     try:
-#         live_update()
-#     except Exception as e:
-#         print(f"Error: {e}")
-#         input("\nPress Enter to exit...")
 
 
 # live update:
